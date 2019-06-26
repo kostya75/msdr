@@ -78,12 +78,13 @@ eq_location_clean<-function(df,column){
 data_df<-eq_location_clean(data_df,"LOCATION_NAME")
 
 convert_na_1<-function(x) ifelse(!is.na(x),x,1)
+convert_na_n<-function(x,n) ifelse(!is.na(x),x,n)
 
 # Add datetime
-tt<-
+data_df2<-
 data_df%>%
   mutate(MONTH=convert_na_1(MONTH), DAY=convert_na_1(DAY),HOUR=convert_na_1(HOUR),MINUTE=convert_na_1(MINUTE))%>%
   unite(datetime,YEAR, MONTH, DAY,HOUR,remove=F)%>%
   mutate(datetime=lubridate::ymd_h(datetime))%>%
-  select(-c(MONTH,DAY,YEAR,HOUR,MINUTE,SECOND))
+  select(-c(MONTH,DAY,HOUR,MINUTE,SECOND))
 
